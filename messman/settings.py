@@ -40,6 +40,8 @@ INSTALLED_APPS = [
      'messday',
     'rest_framework',
     'corsheaders',
+    'auth_api',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
