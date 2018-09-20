@@ -10,14 +10,22 @@ class Login(APIView):
     def post(self, request):
         serializer = LoginSerializer(data = request.data)
         serializer.is_valid(raise_exception = True)
-        user = serializer.validated_data['user']
-        django_login(user, request)
+        print(serializer.validated_data)
+        user = serializer.validated_data["user"]
+        django_login(request ,user)
+        print(user.__dict__)
         token, created = Token.objects.get_or_create(user=user)
-        return Response({"token":token.key}, status= 200)
+        return Response({"token":token.key ,
+        "user_id" :user.pk ,
+         "email" : user.email , 
+         "is_active" : user.is_active ,
+          "is_staff" : user.is_staff,
+          "username" : user.username
+          }, status= 200)
 
 
 class Logout(APIView):
-    authentication_classes = (TokenAuthentication)
+    authentication_classes = [TokenAuthentication]
 
     def post(self, request):
         django_logout(request)
