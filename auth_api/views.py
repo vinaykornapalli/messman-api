@@ -9,8 +9,7 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 class Login(APIView):
     def post(self, request):
         serializer = LoginSerializer(data = request.data)
-        serializer.is_valid(raise_exception = True)
-        print(serializer.validated_data)
+        serializer.is_valid(raise_exception = True) 
         user = serializer.validated_data["user"]
         django_login(request ,user)
         print(user.__dict__)
