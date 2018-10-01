@@ -16,8 +16,11 @@ Including another URLconf
 from django.conf.urls import url , include
 from django.contrib import admin
 from  messday import urls
+from auth_api.views import Login, Logout
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api/',include(urls))
+    url(r'^api/',include(urls)),
+    url(r'^api/login/', Login.as_view(), name="login"),
+    url(r'^api/logout/', Logout.as_view(), name="logout"),
 ]
