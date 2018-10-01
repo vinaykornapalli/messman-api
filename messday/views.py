@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from .models import Day ,WeekSchedule
-from .serializers import DaySerializer , WeekScheduleSerializer
+from .serializers import DayListSerializer , WeekScheduleSerializer
 # Create your views here.
 
 
@@ -16,11 +16,11 @@ from .serializers import DaySerializer , WeekScheduleSerializer
 
 class CreateDay(generics.CreateAPIView):
     queryset = Day.objects.all()
-    serializer_class = DaySerializer
+    serializer_class = DayListSerializer
 
 class UpdateDay(generics.UpdateAPIView):
     queryset = Day.objects.all()
-    serializer_class = DaySerializer
+    serializer_class = DayListSerializer
 
 
 
@@ -36,8 +36,12 @@ class CreateWeekSchedule(APIView):
             print(request.user.id)
             p = WeekSchedule.objects.create(user=request.user)
             p.save()
-            data = {'user' : request.user.id}
+            serializer.save(week=p)
+            days = Day.objects.filter(week = p)
+            output_serializer = WeekScheduleSerializer(days, many = True)
+            data = {'body' : output_serializer}
         return Response(data=data)
 
             
 
+    

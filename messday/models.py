@@ -21,3 +21,5 @@ class Day(models.Model):
      created_at = models.DateTimeField(auto_now_add=True)
      updated_at = models.DateTimeField(auto_now=True)
      week = models.ForeignKey(WeekSchedule,on_delete=models.CASCADE)
+     def __str__(self):
+        return "{}_{}".format(self.week.id , self.mess_day)     
