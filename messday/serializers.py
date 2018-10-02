@@ -28,3 +28,8 @@ class WeekScheduleSerializer(serializers.Serializer):
   class Meta:
     list_serializer_class = DayListSerializer
   
+class WeekScheduleResponseSerializer(serializers.ModelSerializer):
+
+  class Meta:
+    model = Day
+    fields = ('mess_day' , 'breakfast' , 'lunch' , 'dinner')
